@@ -1,23 +1,22 @@
-self.addEventListener('install', function(event) {
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open('shakti-ayurveda-cache').then(function(cache) {
+    caches.open('shaktiayurveda-cache').then((cache) => {
       return cache.addAll([
-        '/', // Homepage
-        '/index.html', // Main page
-        '/styles.css', // Your CSS file
-        '/manifest.json', // Manifest file
-        '/icon-192.png', // App icon
-        '/icon-512.png' // App icon
-        // Add any other files you want to work offline
+        '/',
+        '/index.html',
+        '/styles.css',
+        '/manifest.json',
+        'https://raw.githubusercontent.com/ShaktiAyurveda/manifest.json/main/manifest.json'
+        // Add other assets like images or scripts here
       ]);
     })
   );
   self.skipWaiting();
 });
 
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request).then(function(response) {
+    caches.match(event.request).then((response) => {
       return response || fetch(event.request);
     })
   );
